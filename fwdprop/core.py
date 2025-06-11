@@ -1,10 +1,13 @@
 import numpy as np
 from .activations import sigmoid, relu, identity
 
+
+# Layer class: Handles weights, bias, and activation for a single layer
 class Layer:
     def __init__(self, weights, bias, activation='sigmoid'):
         self.weights = np.array(weights)
         self.bias = np.array(bias)
+
         if activation == 'sigmoid':
             self.activation_fn = sigmoid
         elif activation == 'relu':
@@ -18,30 +21,33 @@ class Layer:
         z = np.dot(self.weights, inputs) + self.bias
         return self.activation_fn(z)
 
+
+# NeuralNetwork class: Can handle either single-layer or multi-layer network
 class NeuralNetwork:
     def __init__(self, layers_config=None, weights=None, bias=None, activation=None):
         self.layers = []
 
-        # Case 1: layers_config format
         if layers_config is not None:
+            # Multi-layer config
             for config in layers_config:
-                layer = Layer(
-                    weights=config["weights"],
-                    bias=config["bias"],
-                    activation=config.get("activation", "sigmoid")
+                self.layers.append(
+                    Layer(
+                        weights=config["weights"],
+                        bias=config["bias"],
+                        activation=config.get("activation", "sigmoid")
+                    )
                 )
-                self.layers.append(layer)
-
-        # Case 2: single-layer shortcut
         elif weights is not None and bias is not None:
-            layer = Layer(
-                weights=weights,
-                bias=bias,
-                activation=activation or "sigmoid"
+            # Single-layer config
+            self.layers.append(
+                Layer(
+                    weights=weights,
+                    bias=bias,
+                    activation=activation or "sigmoid"
+                )
             )
-            self.layers.append(layer)
         else:
-            raise ValueError("Invalid NeuralNetwork init args: Provide either `layers_config` or `weights`, `bias`.")
+            raise ValueError("Invalid NeuralNetwork init args. Provide either `layers_config` or (`weights`, `bias`).")
 
     def forward(self, inputs):
         a = np.array(inputs)
