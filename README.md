@@ -1,4 +1,4 @@
-📚 **Documentation:** [View here]([https://GokulanandM.github.io/fwdprop/](https://heartfelt-starship-a1c3e5.netlify.app/))
+📚 Documentation:[[View here](https://heartfelt-starship-a1c3e5.netlify.app/)]
 
 # fwdprop
 
