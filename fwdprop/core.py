@@ -22,5 +22,8 @@ class ForwardPropagator:
         return a
 
 class NeuralNetwork:
-    def __init__(self):
-        pass  # Or actual implementation
+    def __init__(self, weights, bias, activation='sigmoid'):
+        self.propagator = ForwardPropagator(weights, bias, activation)
+
+    def forward(self, inputs):
+        return self.propagator.propagate(inputs)
